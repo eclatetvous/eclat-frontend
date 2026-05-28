@@ -1,0 +1,213 @@
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --teal:        #1D9E75;
+  --teal-light:  #E1F5EE;
+  --teal-dark:   #085041;
+  --teal-mid:    #5DCAA5;
+  --coral:       #D85A30;
+  --coral-light: #FAECE7;
+  --coral-dark:  #712B13;
+  --purple:      #534AB7;
+  --purple-light:#EEEDFE;
+  --purple-dark: #3C3489;
+  --amber:       #BA7517;
+  --amber-light: #FAEEDA;
+  --amber-mid:   #EF9F27;
+  --gray-50:     #F1EFE8;
+  --gray-100:    #D3D1C7;
+  --gray-400:    #888780;
+  --gray-600:    #5F5E5A;
+  --gray-900:    #2C2C2A;
+  --r:           12px;
+  --r-sm:        8px;
+  --shadow:      0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:   0 4px 12px rgba(0,0,0,.10);
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--gray-50);
+  color: var(--gray-900);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root { min-height: 100vh; }
+
+/* Utilitaires */
+.card {
+  background: #fff;
+  border-radius: var(--r);
+  border: 1px solid #eeeae0;
+  box-shadow: var(--shadow);
+  padding: 16px 20px;
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 500;
+}
+.badge-teal   { background: var(--teal-light);   color: var(--teal-dark);   }
+.badge-coral  { background: var(--coral-light);  color: var(--coral-dark);  }
+.badge-purple { background: var(--purple-light); color: var(--purple-dark); }
+.badge-amber  { background: var(--amber-light);  color: #412402;            }
+.badge-gray   { background: var(--gray-100);     color: var(--gray-600);    }
+
+.tag {
+  display: inline-block; padding: 2px 7px; border-radius: 4px;
+  font-size: 11px; border: 1px solid #ddd; color: var(--gray-600);
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 0 16px; height: 36px; border-radius: var(--r-sm);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: 1px solid #ddd; background: #fff; color: var(--gray-900);
+  transition: all .15s;
+}
+.btn:hover { background: var(--gray-50); }
+.btn-primary {
+  background: var(--teal); color: #fff; border-color: var(--teal);
+}
+.btn-primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); }
+.btn-sm { height: 28px; padding: 0 10px; font-size: 12px; }
+
+input[type=text], input[type=search], select, textarea {
+  height: 36px; padding: 0 12px; border: 1px solid #ddd;
+  border-radius: var(--r-sm); font-size: 13px;
+  background: #fff; color: var(--gray-900);
+  font-family: inherit; outline: none; transition: border-color .15s;
+  width: 100%;
+}
+input:focus, select:focus { border-color: var(--teal); }
+select { cursor: pointer; }
+
+/* Loading spinner */
+.spinner {
+  width: 20px; height: 20px; border: 2px solid var(--gray-100);
+  border-top-color: var(--teal); border-radius: 50%;
+  animation: spin .6s linear infinite; margin: auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty { text-align: center; padding: 40px; color: var(--gray-400); font-size: 13px; }
+
+/* Stars */
+.stars { color: var(--amber-mid); }
+
+/* Niveau pills */
+.niv { font-weight: 500; font-size: 12px; }
+.niv-1 { color: var(--gray-600); }
+.niv-2 { color: var(--teal); }
+.niv-3 { color: var(--purple); }
+.niv-4 { color: var(--coral); }
+
+/* ── Impression des fiches FALC ────────────────────────────────────────────── */
+@media print {
+  /* Cacher tout sauf la fiche ouverte */
+  header,
+  .tabs,
+  nav,
+  button:not(.no-print-hide),
+  [class*="sidebar"],
+  [class*="header"],
+  [class*="metrics"],
+  [class*="mode-switcher"],
+  [class*="activity-grid"] {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    font-family: Arial, sans-serif;
+  }
+
+  /* La fiche prend toute la page */
+  .card {
+    box-shadow: none !important;
+    border: none !important;
+    page-break-inside: avoid;
+    max-width: 100% !important;
+  }
+
+  /* Police plus grande pour lisibilité */
+  .card div, .card p, .card span {
+    font-size: 16pt !important;
+    line-height: 1.8 !important;
+  }
+
+  /* Titre en grande police */
+  .card [style*="fontSize: 16"] {
+    font-size: 20pt !important;
+  }
+
+  /* Zone de contenu FALC bien visible */
+  .card [style*="teal-light"] {
+    background: #f0faf5 !important;
+    border-radius: 6pt !important;
+    padding: 14pt !important;
+  }
+
+  /* Numéros des étapes */
+  .card [style*="border-radius: '50%'"] {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Forcer les couleurs à l'impression */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* ── Responsive mobile & tablette ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .console-layout {
+    grid-template-columns: 1fr !important;
+  }
+  .console-sidebar {
+    position: static !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Layout général */
+  .main-content { padding: 12px !important; }
+
+  /* Header */
+  .app-header { padding: 10px 12px !important; }
+  .app-header h1 { font-size: 16px !important; }
+
+  /* Tabs horizontaux — scrollables */
+  .tabs-row { overflow-x: auto !important; -webkit-overflow-scrolling: touch; }
+  .tabs-row::-webkit-scrollbar { display: none; }
+
+  /* Métriques — 2 colonnes sur mobile */
+  .metrics-grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* Fiche apprenant — 1 colonne */
+  .profil-grid { grid-template-columns: 1fr !important; }
+
+  /* Reco section */
+  .reco-item { flex-direction: column !important; }
+  .reco-item button { width: 100% !important; margin-top: 8px; }
+
+  /* Formulaire création apprenant */
+  .form-grid-2 { grid-template-columns: 1fr !important; }
+
+  /* Boutons action */
+  .actions-row { flex-wrap: wrap; gap: 6px; }
+
+  /* Texte tronqué */
+  .text-truncate { max-width: 200px; }
+}
+
+@media (max-width: 480px) {
+  .metrics-grid { grid-template-columns: 1fr 1fr !important; }
+  .card { padding: 12px !important; border-radius: 10px !important; }
+  .btn { font-size: 13px !important; }
+}
